@@ -120,7 +120,7 @@
 
 <body>
     <div class="images" style="width: 500px; height: 100%; float: left; background: rgb(0, 0, 0); overflow-y: scroll;">
-        <a id="downloadAnchorElem" style="display:none"></a>
+        
         <ul id="myUL">
             <li><span class="box">Universe</span>
                 <ul class="nested" id="Ranges">
@@ -167,7 +167,9 @@
         <canvas id="renderCanvas" ></canvas>
     </div>
     <div class="images">
-        <div class="bet_time2"><img width=256px src="skymap2.png"></div>
+        <a id="downloadAnchorElem" href="javascript:click_download()">
+        <div class="bet_time2"><img width=256px src="skymap2.png" ></div>
+    </a>
         <div class="bet_time"><img width=256px src="skymap1.jpg"></div>
         <div class="bet_time3"><img width=256px src="skymap3.jpg"></div>
         <div class="bet_time4"><img width=256px src="skymap4.jpg"></div>
@@ -374,6 +376,13 @@
             // var pickResult = window.scene.pickWithRay(ray);
             // console.log(pickResult)
         }
+        function click_download() {
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(gUniverse));
+                var dlAnchorElem = document.getElementById('downloadAnchorElem');
+                dlAnchorElem.setAttribute("href", dataStr);
+                dlAnchorElem.setAttribute("download", "scene.json");
+                dlAnchorElem.click();
+        }
         function click_galaxy_callback() {
             console.log("click_galaxy_callback");
             var galaxyName = this.innerHTML;
@@ -386,11 +395,7 @@
 
                 gCamera.setTarget(new BABYLON.Vector3(0, 0, 0));//gScale*galaxyData[1],gScale*galaxyData[2],gScale*galaxyData[3]));
 
-                var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(gUniverse));
-                var dlAnchorElem = document.getElementById('downloadAnchorElem');
-                dlAnchorElem.setAttribute("href", dataStr);
-                dlAnchorElem.setAttribute("download", "scene.json");
-                dlAnchorElem.click();
+                
             }
         }
         var gInitialized = false;
